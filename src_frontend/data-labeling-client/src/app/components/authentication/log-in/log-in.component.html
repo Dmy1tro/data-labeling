@@ -1,0 +1,49 @@
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card-spacer">
+        <mat-card-header class="d-flex justify-content-center">
+            <mat-card-title class="title">Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="standard">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="userType">
+                    <mat-option *ngFor="let item of userTypes" [value]="item.value">
+                        {{ item.title}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formValidationService.hasErrors(loginForm, 'userType')">
+                    {{ formValidationService.getErrorMessage(loginForm, 'userType') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="name@domain.com" type="email" formControlName="email">
+                <mat-error *ngIf="formValidationService.hasErrors(loginForm, 'email')">
+                    {{ formValidationService.getErrorMessage(loginForm, 'email') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="******" [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password">
+                <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="formValidationService.hasErrors(loginForm, 'password')">
+                    {{ formValidationService.getErrorMessage(loginForm, 'password') }}
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions class="d-flex flex-column">
+            <app-loader *ngIf="loading"></app-loader>
+            <button *ngIf="!loading" mat-raised-button class="w-75 mx-auto text-size-md" color="primary" type="submit">
+                Log in
+            </button>
+            <a class="mt-3 w-75 mx-auto btn btn-link text-size-sm"
+                [routerLink]="['/authentication/register']">Register</a>
+        </mat-card-actions>
+    </mat-card>
+</form>

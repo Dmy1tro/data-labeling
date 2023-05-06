@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetZip" Version="1.15.0" />
+    <PackageReference Include="FluentValidation" Version="10.1.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataLabeling.Api.Common\DataLabeling.Api.Common.csproj" />
+    <ProjectReference Include="..\DataLabeling.Data\DataLabeling.Data.csproj" />
+    <ProjectReference Include="..\DataLabeling.Entities\DataLabeling.Entities.csproj" />
+    <ProjectReference Include="..\DataLabeling.Services.Interfaces\DataLabeling.Services.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+    <!-- <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="opened$">
+        <mat-toolbar>Menu</mat-toolbar>
+        <mat-nav-list>
+            <ng-container *ngIf="isCustomer">
+                <a mat-list-item [routerLink]="['/orders/customer']" routerLinkActive="active">My orders</a>
+            </ng-container>
+
+            <ng-container *ngIf="isPerformer">
+                <a mat-list-item [routerLink]="['/orders/performer']" routerLinkActive="active">Orders</a>
+            </ng-container>
+        </mat-nav-list>
+    </mat-sidenav> -->
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <!-- <button *ngIf="isAuthenticated" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+                </button> -->
+                <span class="main-label">Data-Labeling</span>
+                <ng-container *ngIf="isAuthenticated">
+                    <button class="profile ms-5" mat-button color="secondary" (click)="goToOrders()">
+                        Orders
+                    </button>
+                    <button class="profile ms-1" mat-button color="secondary" (click)="goToProfile()">
+                        Profile
+                    </button>
+                </ng-container>
+                <div class="profile-block">
+                    <ng-container *ngIf="isAuthenticated">
+                        <button class="profile outline-none" mat-button (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            Logout
+                        </button>
+                        <!-- <mat-menu class="menu outline-none" #menu="matMenu">
+                            <button mat-menu-item class="outline-none">
+                                <mat-icon>account_circle</mat-icon>
+                                Profile
+                            </button>
+                            <button mat-menu-item class="outline-none" (click)="logout()">
+                                <mat-icon>exit_to_app</mat-icon>
+                                Logout
+                            </button>
+                        </mat-menu> -->
+                    </ng-container>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

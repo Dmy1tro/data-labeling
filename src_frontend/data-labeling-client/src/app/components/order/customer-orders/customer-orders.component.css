@@ -1,0 +1,6 @@
+.add-circle-button {
+    position: fixed;
+    bottom: 60px;
+    right: 47px;
+    z-index: 999;
+  }

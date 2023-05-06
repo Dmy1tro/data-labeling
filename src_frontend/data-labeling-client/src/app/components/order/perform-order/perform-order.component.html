@@ -1,0 +1,24 @@
+<ng-container *ngIf="order">
+    <div class="d-flex justify-content-center mt-2">
+        <h4>Perform orders and earn money!</h4>
+    </div>
+    <ng-container *ngIf="IsCollectDataOrder">
+        <button mat-raised-button class="text-size-md btn-back-collect" color="secondary" (click)="back()">
+            Back
+        </button>
+        <div class="d-block mx-auto col-md-9 my-2">
+            <app-perform-collect-data [order]="order" (orderChanged)="onOrderChanged()"></app-perform-collect-data>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isLabelDataOrder">
+        <button mat-raised-button class="text-size-md btn-back-label" color="secondary" (click)="back()">
+            Back
+        </button>
+        <button mat-raised-button class="text-size-md btn-help-label" color="primary" (click)="showHelp()">
+            Help
+        </button>
+        <div class="d-block mx-auto my-2">
+            <app-perform-label-data [order]="order" (orderChanged)="onOrderChanged()"></app-perform-label-data>
+        </div>
+    </ng-container>
+</ng-container>

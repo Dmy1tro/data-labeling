@@ -1,0 +1,40 @@
+<div class="card col-md-4 d-block mx-auto mt-4">
+    <div class="card-body my-auto">
+        <h3 class="text-center card-title mb-2">Profile info</h3>
+        <hr>
+        <br>
+        <ul class="list-group list-group-flush w-50 mx-auto">
+            <li class="list-group-item d-inline-flex">
+                <mat-icon>person</mat-icon>
+                {{ userData.fullName }}
+            </li>
+            <li class="list-group-item d-inline-flex">
+                <mat-icon>email</mat-icon>
+                {{ userData.email }}
+            </li>
+            <li class="list-group-item d-inline-flex">
+                <mat-icon>vpn_key</mat-icon>
+                {{ toUserType(userData.userType) }}
+            </li>
+        </ul>
+        <app-loader *ngIf="!statistic"></app-loader>
+        <div class="mt-1 col-md-6 mx-auto" *ngIf="statistic">
+            <p class="text-fam">
+                Orders for collect data - {{ statistic.rawDataOrders }}
+            </p>
+            <p class="text-fam">
+                Orders for label data - {{ statistic.labelDataOrders }}
+            </p>
+            <p class="text-fam">
+                Total orders - {{ statistic.totalOrders }}
+            </p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-center">
+            <button mat-raised-button class="mx-2 w-50" color="secondary" (click)="goBack()">
+                Back
+            </button>
+        </div>
+    </div>
+</div>

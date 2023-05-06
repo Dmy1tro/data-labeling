@@ -1,0 +1,54 @@
+<div class="card col-md-4 d-block mx-auto mt-4">
+    <div class="card-body my-auto">
+        <h3 class="text-center card-title mb-2">Profile info</h3>
+        <hr>
+        <br>
+        <app-loader *ngIf="!performer"></app-loader>
+        <div *ngIf="performer">
+            <ul class="list-group list-group-flush mx-auto w-50">
+                <li class="list-group-item d-inline-flex">
+                    <mat-icon>person</mat-icon>
+                    {{ performer.fullName }}
+                </li>
+                <li class="list-group-item d-inline-flex">
+                    <mat-icon>email</mat-icon>
+                    {{ performer.email }}
+                </li>
+                <li class="list-group-item d-inline-flex">
+                    <mat-icon>vpn_key</mat-icon>
+                    {{ toUserType(performer.userType) }}
+                </li>
+                <li class="list-group-item d-inline-flex">
+                    <mat-icon>business_center</mat-icon>
+                    {{ toUserRating(performer.rating) }}
+                </li>
+                <li class="list-group-item d-inline-flex">
+                    <mat-icon>attach_money</mat-icon>
+                    {{ performer.balance }}
+                </li>
+            </ul>
+        </div>
+        <app-loader *ngIf="!statistic"></app-loader>
+        <div class="mt-1 col-md-6 mx-auto" *ngIf="statistic">
+            <p class="text-start text-fam">
+                Images uploaded - {{ statistic.rawDataCount }}
+            </p>
+            <p class="text-start text-fam">
+                Images labeled - {{ statistic.labelDataCount }}
+            </p>
+            <p class="text-start text-fam">
+                Total completed jobs - {{ statistic.totalJobs }}
+            </p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-center">
+            <button mat-raised-button class="mx-2" color="secondary" (click)="goBack()">
+                Back
+            </button>
+            <button mat-raised-button class="mx-2" color="primary" (click)="getMoney()">
+                Get money
+            </button>
+        </div>
+    </div>
+</div>

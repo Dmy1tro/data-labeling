@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="form-group float-end">
+        <div class="text-right">
+            <button mat-icon-button matSuffix mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <h3 class="text-center">Order</h3>
+    <hr>
+    <form [formGroup]="orderForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'name')">
+                {{ formValidator.getErrorMessage(orderForm, 'name') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Requirements</mat-label>
+            <textarea matInput formControlName="requirements"></textarea>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'requirements')">
+                {{ formValidator.getErrorMessage(orderForm, 'requirements') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field color="primary" appearance="standard">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
+                <mat-option *ngFor="let item of orderTypes" [value]="item.value">
+                    {{ toTypeTitle(item.value) }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'type')">
+                {{ formValidator.getErrorMessage(orderForm, 'type') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field [hidden]="isLabelOrder" color="primary" appearance="standard">
+            <mat-label>Required dataset count</mat-label>
+            <input matInput type="number" formControlName="datSetRequiredCount">
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'datSetRequiredCount')">
+                {{ formValidator.getErrorMessage(orderForm, 'datSetRequiredCount') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isLabelOrder" color="primary" appearance="standard">
+            <mat-label>Variants</mat-label>
+            <mat-chip-list #chipList aria-label="Variants" formControlName="variants">
+              <mat-chip *ngFor="let item of orderForm.value.variants" [selectable]="true"
+                       [removable]="true" (removed)="removeVariant(item)">
+                {{item}}
+                <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="New variant..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="true"
+                     (matChipInputTokenEnd)="addVariant($event)">
+            </mat-chip-list>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'variants')">
+                {{ formValidator.getErrorMessage(orderForm, 'variants') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field color="primary" appearance="standard">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+                <mat-option *ngFor="let item of orderPriorities" [value]="item.value">
+                    {{ item.title }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'priority')">
+                {{ formValidator.getErrorMessage(orderForm, 'priority') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field color="primary" appearance="standard">
+            <mat-label>Deadline</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName='deadline' readonly (click)="picker1.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'deadline')">
+                {{ formValidator.getErrorMessage(orderForm, 'deadline') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field id="totalPrice" color="primary" class="float-start" appearance="standard">
+            <mat-label>Total price</mat-label>
+            <input matInput readonly [value]="price">
+            <button mat-raised-button class="btn btn-primary" type="button" color="primary" (click)="getPrice()">
+                <ng-container *ngIf="priceLoading">
+                    <app-loader></app-loader>
+                </ng-container>
+                <ng-container *ngIf="!priceLoading">
+                    Refresh
+                </ng-container>
+            </button>
+        </mat-form-field>
+
+        <div *ngIf="isLabelOrder" class="form-group mt-2">
+            <button mat-flat-button color="primary" type="button" class="me-3" (click)="imageFiles.click()">
+                Choose image files
+            </button>
+            <input #imageFiles id="files" formControlName="imageFiles" hidden="true" multiple=""
+                type="file" onclick="this.value=null" accept="image/*" (change)="onFileChange($event)" />
+
+            <label for="input-file-id" class="md-button md-raised md-primary">
+                {{ files.length }} Choosen Files
+            </label>
+            <button mat-raised-button class="mx-3" color="secondary" type="button" (click)="files=[]">
+                Clear
+            </button>
+            <mat-error *ngIf="formValidator.hasErrors(orderForm, 'imageFiles')">
+                {{ formValidator.getErrorMessage(orderForm, 'imageFiles') }}
+            </mat-error>
+        </div>
+
+        <div class="row px-2 mt-4">
+            <div class="col-md-6">
+                <app-loader *ngIf="loading"></app-loader>
+                <button *ngIf="!loading" mat-raised-button class="btn-block w-100" type="submit" color="primary">
+                    Create
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button mat-raised-button class="btn-block w-100" type="button" (click)="resetForm()">
+                    Reset
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

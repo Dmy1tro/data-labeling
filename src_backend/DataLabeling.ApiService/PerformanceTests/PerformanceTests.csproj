@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="057211e1-85d6-4744-816e-74dcf0aeb7a6_animal2.jpg" />
+    <None Remove="67281694-8ba6-4c34-872d-f8a0e9d048a8_animal3.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="057211e1-85d6-4744-816e-74dcf0aeb7a6_animal2.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="67281694-8ba6-4c34-872d-f8a0e9d048a8_animal3.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataLabeling.Infrastructure\DataLabeling.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

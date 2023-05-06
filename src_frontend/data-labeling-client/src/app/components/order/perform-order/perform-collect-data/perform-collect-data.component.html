@@ -1,0 +1,49 @@
+<mat-card class="card-spacer">
+    <mat-card-header class="d-flex justify-content-center">
+        <mat-card-title class="title">{{ order.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            <h5>Instruction</h5>
+            <p class="text-start text-fam">
+                You need to upload pictures that meet the order requirements. The more pictures are uploaded, the more
+                reward will be. After completing the task, the customer will be able to rate the work done. The higher
+                the score, the greater the reward will be. Good luck!
+            </p>
+        </div>
+
+        <h5>Order status</h5>
+        <p class="ms-2">{{ order.currentProgress }} / {{ order.datSetRequiredCount }} images</p>
+
+        <div *ngIf="order.requirements">
+            <h5>Order requirements</h5>
+            <p>{{ order.requirements }}</p>
+        </div>
+
+        <form [formGroup]="dataForm" class="mt-4 mb-5" novalidate>
+            <div>
+                <button mat-flat-button color="primary" class="me-3" (click)="imagesInput.click()">
+                    Choose image files
+                </button>
+                <input #imagesInput id="input-file-id" formControlName="imageFiles" hidden="true" multiple=""
+                    type="file" onclick="this.value=null" accept="image/*" (change)="onFileChange($event)" />
+
+                <label for="input-file-id" class="md-button md-raised md-primary">
+                    {{ files.length }} Choosen Files
+                </label>
+                <button mat-raised-button class="mx-3" color="secondary" type="button" (click)="resetForm()">
+                    Reset
+                </button>
+                <mat-error *ngIf="formValidator.hasErrors(dataForm, 'imageFiles')">
+                    {{ formValidator.getErrorMessage(dataForm, 'imageFiles') }}
+                </mat-error>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions class="d-flex flex-column my-4">
+        <app-loader *ngIf="loading"></app-loader>
+        <button *ngIf="!loading" mat-raised-button class="w-25 mx-auto text-size-md" color="primary" (click)="onSubmit()">
+            Submit
+        </button>
+    </mat-card-actions>
+</mat-card>

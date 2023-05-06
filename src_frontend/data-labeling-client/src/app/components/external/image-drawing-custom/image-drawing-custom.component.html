@@ -1,0 +1,87 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<div class="loading" *ngIf="isLoading">
+    <ng-container *ngTemplateOutlet="loadingTemplate ? loadingTemplate : defaultLoading"></ng-container>
+</div>
+<div class="error" *ngIf="hasError">
+    <ng-container *ngTemplateOutlet="errorTemplate ? errorTemplate : defaultError"></ng-container>
+</div>
+
+<ng-template #defaultLoading>
+    <p>Loading</p>
+</ng-template>
+<ng-template #defaultError>
+    <p>{{ errorMessage }}</p>
+</ng-template>
+
+<div class="row w-100">
+    <div class="col-md-8">
+        <div [ngStyle]="{ border: borderCss }">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form [formGroup]="dataLabelForm" novalidate class="w-50 mx-auto">
+            <mat-form-field appearance="standard">
+                <mat-label>What is displayed</mat-label>
+                <mat-select formControlName="variant">
+                    <mat-option *ngFor="let item of variants" [value]="item">
+                        {{ item }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formValidationService.hasErrors(dataLabelForm, 'variant')">
+                    {{ formValidationService.getErrorMessage(dataLabelForm, 'variant') }}
+                </mat-error>
+            </mat-form-field>
+        </form>
+        <div class="tools m-2 p-4 w-50 mx-auto" *ngIf="!isLoading">
+            <div class="d-flex justify-content-between mb-2 my-auto">
+                <i class="material-icons btn-custom" [class.selected]="currentTool == 'brush'"
+                    (click)="selectTool('brush')" [title]="'brush'">brush</i>
+                <span *ngFor="let drawingSizeName of drawingSizesName" class="size btn-custom my-auto"
+                    [style.width.px]="drawingSizes[drawingSizeName] * 0.8 + 8"
+                    [style.height.px]="drawingSizes[drawingSizeName] * 0.8 + 8"
+                    [style.borderRadius.px]="drawingSizes[drawingSizeName] * 0.4 + 4"
+                    [class.selected]="currentSize == drawingSizeName" [title]="'sizes.' + drawingSizeName"
+                    (click)="selectDrawingSize(drawingSizeName)">
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between my-2">
+                <input style="display: none" type="file" #fileInput (change)="importPhotoFromFile($event)"
+                    accept="image/*" />
+                <i class="material-icons btn-custom" *ngIf="enableLoadAnotherImage && !hasImage"
+                    (click)="fileInput.click();" [title]="'load image'">attach_file</i>
+                <i class="material-icons btn-custom" *ngIf="enableLoadAnotherImage && !hasImage"
+                    (click)="importPhotoFromUrl()" [title]="'load image url'">insert_drive_file</i>
+                <i class="material-icons btn-custom" *ngIf="enableRemoveImage && hasImage" (click)="removeImage()"
+                    [title]="'remove image'">clear</i>
+            </div>
+
+            <div class="d-flex justify-content-between my-2">
+                <i class="material-icons btn-custom" [class.disabled]="!canUndo" (click)="undo()"
+                    [title]="'undo'">undo</i>
+                <i class="material-icons btn-custom" [class.disabled]="!canRedo" (click)="redo()"
+                    [title]="'redo'">redo</i>
+                <i class="material-icons btn-custom" (click)="clearCanvas()" [title]="'clear'">delete</i>
+            </div>
+
+            <div class="d-flex justify-content-md-around mt-3">
+                <div *ngFor="let colorName of colorsName" [class.selected]="currentColor == colorName" class="color"
+                    [ngClass]="colorName" [style.background]="colors[colorName]" [title]="'colors.' + colorName"
+                    (click)="selectColor(colorName)">
+                </div>
+            </div>
+            <!-- Any additional toolbar buttons to be projected by the consuming app -->
+            <ng-content></ng-content>
+        </div>
+        <app-loader *ngIf="labelProcessing"></app-loader>
+        <div *ngIf="!labelProcessing" class="buttons w-50 mx-auto">
+            <button mat-raised-button color="primary" (click)="saveImage()">
+                Save
+            </button>
+            <a href="#" class="button btn-light-custom" *ngIf="showCancelButton"
+                (click)="cancelAction(); $event.preventDefault()">Cancel</a>
+        </div>
+    </div>
+</div>

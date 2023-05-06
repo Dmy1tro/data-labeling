@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Order payment</h1>
+<div mat-dialog-content>
+    <app-loader *ngIf="!order"></app-loader>
+    <ng-container *ngIf="order">
+        <p><b>Name:</b> {{ order.name }}</p>
+        <p><b>Price:</b> {{ order.price }} $</p>
+    </ng-container>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button [mat-dialog-close]="false" color="secondary">Back</button>
+    <!-- <button mat-raised-button color="primary" (click)="onSubmit()">
+        <img src="https://static.liqpay.ua/buttons/logo-small.png" name="btn_text"
+            style="margin-right: 7px !important; vertical-align: middle !important;" />
+        <span style="vertical-align: middle !important">Pay</span>
+    </button> -->
+
+    <app-loader *ngIf="!liqPayUrl"></app-loader>
+    <a *ngIf="liqPayUrl" [href]="liqPayUrl" mat-raised-button color="primary" target="_blank">
+        <img src="https://static.liqpay.ua/buttons/logo-small.png" name="btn_text"
+            style="margin-right: 7px !important; vertical-align: middle !important;" />
+        <span style="vertical-align: middle !important">Pay</span>
+    </a>
+</div>

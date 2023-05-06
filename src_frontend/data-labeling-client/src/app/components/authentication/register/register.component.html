@@ -1,0 +1,64 @@
+<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="card-spacer">
+        <mat-card-header class="d-flex justify-content-center">
+            <mat-card-title class="title">Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="standard">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="userType">
+                    <mat-option *ngFor="let item of userTypes" [value]="item.value">
+                        {{ item.title}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formValidationService.hasErrors(registerForm, 'userType')">
+                    {{ formValidationService.getErrorMessage(registerForm, 'userType') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="name@domain.com" type="email" formControlName="email">
+                <mat-error *ngIf="formValidationService.hasErrors(registerForm, 'email')">
+                    {{ formValidationService.getErrorMessage(registerForm, 'email') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Fist name</mat-label>
+                <input matInput placeholder="name@domain.com" type="text" formControlName="firstName">
+                <mat-error *ngIf="formValidationService.hasErrors(registerForm, 'firstName')">
+                    {{ formValidationService.getErrorMessage(registerForm, 'firstName') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Last name</mat-label>
+                <input matInput placeholder="name@domain.com" type="text" formControlName="lastName">
+                <mat-error *ngIf="formValidationService.hasErrors(registerForm, 'lastName')">
+                    {{ formValidationService.getErrorMessage(registerForm, 'lastName') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="******" [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password">
+                <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="formValidationService.hasErrors(registerForm, 'password')">
+                    {{ formValidationService.getErrorMessage(registerForm, 'password') }}
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions class="d-flex flex-column">
+            <app-loader *ngIf="loading"></app-loader>
+            <button *ngIf="!loading" mat-raised-button class="w-75 mx-auto text-size-md" color="primary" type="submit">
+                Register
+            </button>
+            <a class="mt-3 w-75 mx-auto btn btn-link text-size-sm" [routerLink]="['/authentication/login']">Login</a>
+        </mat-card-actions>
+    </mat-card>
+</form>

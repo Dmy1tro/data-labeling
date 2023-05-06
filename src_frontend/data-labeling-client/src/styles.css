@@ -1,0 +1,77 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background:#f9f9f9;
+    font-size: 14px;
+    margin: 0;
+}
+
+input {
+    height: 100%;
+}
+
+button {
+    outline: none !important;
+}
+
+th {
+    font-size: 16px;
+}
+
+td {
+    font-size: 16px;
+}
+
+li {
+    font-size: 17px;
+}
+
+mat-form-field mat-label {
+    font-size: 16px;
+}
+
+mat-form-field {
+    font-size: 16px !important;
+}
+
+mat-form-field input {
+    font-size: 17px !important;
+}
+
+mat-form-field textarea {
+    font-size: 16px !important;
+}
+
+mat-form-field {
+    width: 97% !important;
+}
+
+mat-icon {
+    margin-right: 0.8rem;
+}
+
+.btn-link {
+    font-size: 18px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.text-size-bg {
+    font-size: 24px;
+}
+
+.text-size-md {
+    font-size: 18px;
+}
+
+.text-size-sm {
+    font-size: 16px;
+}
+
+.text-overflow-hidden {
+    word-wrap: break-word;
+}

@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-card-header class="d-flex justify-content-center">
+        <mat-card-title class="title">{{ order.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <app-loader *ngIf="loading || !displayDrawing"></app-loader>
+
+        <app-image-drawing-custom
+            *ngIf="!loading && displayDrawing"
+            [variants]="order.variants"
+            [src]="imgUrl"
+            [width]="835"
+            [loadingBtn]="labelProcessingObs"
+            outputMimeType="'image/jpeg'" 
+            [outputQuality]="1"
+            [colors]="{ 'black':'#000', 'white':'#fff' }"
+            [refresh]="refreshObs"
+            (save)="save($event)"
+            [showCancelButton]="false">
+        </app-image-drawing-custom>
+    </mat-card-content>
+    <mat-card-actions class="d-flex flex-column">
+        <app-loader *ngIf="loading"></app-loader>
+    </mat-card-actions>
+</mat-card>
